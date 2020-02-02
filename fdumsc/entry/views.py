@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render , HttpResponse
 
-# Create your views here.
+
+def index(request):
+	return HttpResponse("""
+		<a href="/articles"> 文章 </a>
+		<p></p>
+		<a href="/forum"> 讨论区 </a>
+	""")

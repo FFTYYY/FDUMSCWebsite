@@ -1,0 +1,60 @@
+{% load static %}
+
+<html>
+
+<head>
+
+	<link rel = "stylesheet" href = {% static "forum/topic.css" %} type = "text/css" />
+	
+</head>
+
+<body>
+
+	<div id = "main_area">
+
+		<!-- 标题 -->
+		<div id = "title">
+			<p class = "title_p">{{topic.name}}</p>
+		</div>
+
+		<!-- 话题列表 -->
+		<div id = "comment_list">
+			<hr />
+			{% for content , append in comment_list %}
+
+				<p class = "comment_p">
+					{{content}} 
+					<br>
+					{{append | safe}}
+				</p>
+				<hr />
+			{% endfor %}
+
+		</div>
+
+	</div>
+
+	<div id = "create_area">
+		<form action = "newcomment_submit" method = "post">
+		{% csrf_token %}
+
+		内容:
+		<textarea class = "text_input" id = "comment_input" name = "content"></textarea>
+		称呼: <input type = "text" class = "text_input" name = "name"/>
+
+		<input type = "submit" value = "发表言论" id = "submit_button"/>
+
+		</form>
+
+	</div>
+
+	<div id = "info_area">
+		<p>
+			类型：话题<br/>
+			创建时间: {{时间}}
+		</p>
+		<a href = "../">返回</a>
+	</div>
+
+</body>
+</html>
