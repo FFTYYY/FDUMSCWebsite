@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'entry.apps.EntryConfig',
     'articles.apps.ArticlesConfig',
     'forum.apps.ForumConfig',
+    'authorization.apps.AuthorizationConfig',
 ]
 
 MIDDLEWARE = [

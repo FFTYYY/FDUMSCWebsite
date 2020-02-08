@@ -9,3 +9,4 @@ urlpatterns = [
 	path("<str:article_address>/" , views.get_article) ,
 
 ]
+
