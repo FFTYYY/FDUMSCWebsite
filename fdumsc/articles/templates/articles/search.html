@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+	<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@latest/dist/vue.js"></script>
+</head>
+
+<body>
+	<div id="search">
+		<div class="container">
+			<div class="row">
+				<nav class="navbar navbar-default" role="navigation">
+					<div class="container-fluid"> 
+					    <div class="navbar-header">
+					        <a class="navbar-brand">搜索界面</a>
+					    </div>
+						<!-- 搜索区域 -->
+						<form class="navbar-form navbar-right" role="search" action="{% url 'articles:search' %}" method="POST">
+						    {% csrf_token %}
+							<div class="form-group">
+								<input type="text" name="keywords" placeholder="请输入标题">
+							</div>
+						    <button type="submit" class="btn btn-default">搜索</button>
+						</form>
+				</nav>
+			</div>
+		</div>
+		<div class="col-md-1">
+			
+		</div>
+		<div class="col-md-6">
+			<!-- 结果列表 -->
+			{% if articles_list %}
+			    <ul>
+			    {% for article in articles_list %}
+			        <li><a href="{% url 'articles:detail' article.id %}" target="_blank">{{ article.title }}</a></li>
+			    {% endfor %}
+			    </ul>
+			{% else %}
+			    <p>No article matches your input.</p>
+			{% endif %}
+		</div>
+	</div>
+    <script>
+    var app = new Vue({
+        el: '#search', 
+    	data:{
+    	},
+    	methods:{
+    	},
+    })
+    </script>
+</body>

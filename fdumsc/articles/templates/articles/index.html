@@ -1,8 +1,98 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+    <meta charset="utf-8">
+	<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@latest/dist/vue.js"></script>
+</head>
 
-<p> 文章列表 </p>
-{% for article in article_list %}
+<body>
+	<div id="articles">
+		<div class="container">
+			<div class="row">
+				<nav class="navbar navbar-default" role="navigation">
+					<div class="container-fluid"> 
+					    <div class="navbar-header">
+					        <a class="navbar-brand">文章列表</a>
+					    </div>
+						<!-- 搜索区域 -->
+						<form class="navbar-form navbar-right" role="search" action="{% url 'articles:search' %}" method="POST">
+						    {% csrf_token %}
+							<div class="form-group">
+								<input type="text" name="keywords" placeholder="请输入标题">
+							</div>
+						    <button type="submit" class="btn btn-default">搜索</button>
+						</form>
+				</nav>
+			</div>
+			<div class="row">
+				<div class="col-md-2">
+					<ul class="list-group">
+					    <button class="list-group-item" v-on:click="select(1)">学习资料</li>
+						<button class="list-group-item" v-on:click="select(2)">面试宝典</li>
+						<button class="list-group-item" v-on:click="select(3)">题海解读</li>
+					</ul>
+				</div>
+				<div class="col-md-6">
+					<div v-if="selectNum == 1">
+						<p>
+						    {% if learning_list %}
+						        <ul>
+						        {% for article in learning_list %}
+						            <li><a href="{% url 'articles:detail' article.id %}" target="_blank">{{ article.title }}</a></li>
+						        {% endfor %}
+						        </ul>
+						    {% else %}
+						        <p>No articles are available.</p>
+						    {% endif %}
+						</p>
+					</div>
+					<div v-else-if="selectNum == 2">
+						<p>
+						    {% if interview_list %}
+						        <ul>
+						        {% for article in interview_list %}
+						            <li><a href="{% url 'articles:detail' article.id %}" target="_blank">{{ article.title }}</a></li>
+						        {% endfor %}
+						        </ul>
+						    {% else %}
+						        <p>No articles are available.</p>
+						    {% endif %}
+						</p>
+					</div>
+					<div v-else>
+						<p>
+						    {% if exercise_list %}
+						        <ul>
+						        {% for article in exercise_list %}
+						            <li><a href="{% url 'articles:detail' article.id %}" target="_blank">{{ article.title }}</a></li>
+						        {% endfor %}
+						        </ul>
+						    {% else %}
+						        <p>No articles are available.</p>
+						    {% endif %}
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <script>
+    var app = new Vue({
+        el: '#articles', 
+		data:{
+			selectNum: 1,
+		},
+		methods:{
+			select:function(num){
+				this.selectNum = num;
+			},
+		},
+    })
+    </script>
+</body>
 
-<a href="./{{article.address}}"> {{article.title}} </a>
-
-{% endfor %}
+</html>

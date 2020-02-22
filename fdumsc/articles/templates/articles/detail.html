@@ -1,0 +1,62 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'articles/code.css' %}">
+	<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@latest/dist/vue.js"></script>
+</head>
+
+<body>
+	<div id="detail">
+		<!-- 文章区域 -->
+		<div class="page-header">
+		    <h1 align="center"><strong>{{ article.title }}</strong>
+		        <p><small>作者：{{ article.author }}，时间：{{ article.pub_date }}</small></p>
+		    </h1>
+		</div>
+		<div>{{ article.content | safe }}</div>
+		<!-- 评论区域 -->
+		<div class="panel panel-info">
+		    <div class="panel-heading">
+		        <h3 class="panel-title">评论</h3>
+		    </div>
+		    <div class="panel-body">
+		        {% if comments_list %}
+		            {% for comment in comments_list %}
+						<div class="well">{{ comment.content }}<p align="right"> {{ comment.pub_date }}</p></div>
+		            {% endfor %}
+		        {% else %}
+		            <p>No comment is available.</p>
+		        {% endif %}
+		    </div>
+		</div>
+		
+		<!-- 新建评论 -->
+		<form action="{% url 'articles:detail' article.id %}" method="POST" style="align-content: center;">
+		    {% csrf_token %}
+			<div align="center">
+				<textarea style="width: 50%;" class="form-control" rows="3" type="text" name="comment_content" placeholder="请输入你的评论"></textarea>
+				<input type="submit" class="btn btn-success" value="提交">
+			</div>
+		    
+		</form>
+	</div>
+	<script>
+	var app = new Vue({
+	    el: '#detail', 
+		data:{
+		},
+		methods:{
+		},
+	})
+	</script>
+</body>
+
+</html>

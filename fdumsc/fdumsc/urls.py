@@ -14,7 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path , include
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -22,5 +24,10 @@ urlpatterns = [
     path("articles/" , include('articles.urls')),
     path("forum/" , include('forum.urls')),
     path("authorization/" , include('authorization.urls')),
+    path('mdeditor/', include('mdeditor.urls')), 
 ]
 
+# as for mdeditor, without this step, images can not show successfully
+if settings.DEBUG:
+    # static files (images, css, javascript, etc.)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
