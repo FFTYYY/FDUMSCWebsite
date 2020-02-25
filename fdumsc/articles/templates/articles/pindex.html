@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <h1><strong>文章列表</strong></h1>
+    <!-- 搜索区域 -->
+    <form action="{% url 'articles:search' %}" method="POST">
+        {% csrf_token %}
+        标题：<input type="text" name="keywords">
+        <input type="submit" value="搜索">
+    </form>
+    <!-- 学习资料-->
+    <h2><strong>学习资料</strong></h2>
+    <p>
+        {% if learning_list %}
+            <ul>
+            {% for article in learning_list %}
+                <li><a href="{% url 'articles:detail' article.id %}" target="_blank">{{ article.title }}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No articles are available.</p>
+        {% endif %}
+    </p>
+    <!-- 面试宝典-->
+    <h2><strong>面试宝典</strong></h2>
+    <p>
+        {% if interview_list %}
+            <ul>
+            {% for article in interview_list %}
+                <li><a href="{% url 'articles:detail' article.id %}" target="_blank">{{ article.title }}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No articles are available.</p>
+        {% endif %}
+    </p>
+    <!-- 题海解读-->
+    <h2><strong>题海解读</strong></h2>
+    <p>
+        {% if exercise_list %}
+            <ul>
+            {% for article in exercise_list %}
+                <li><a href="{% url 'articles:detail' article.id %}" target="_blank">{{ article.title }}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No articles are available.</p>
+        {% endif %}
+    </p>
+</body>
+
+</html>

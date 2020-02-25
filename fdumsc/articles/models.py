@@ -1,26 +1,23 @@
 from django.db import models
 from mdeditor.fields import MDTextField
-from enum import IntEnum, unique
 
 # Create your models here.
-@unique
-class ArticleType(IntEnum):
-    LEARNING = 1
-    INTERVIEW = 2
-    EXERCISE = 3
-
 
 class Article(models.Model):
-    # the title of an article
-    title = models.CharField(max_length=20 , default="")
-    # the author of an article
+
+    # define the type of articles
+    class ArticleType(models.IntegerChoices):
+        LEARNING = 1
+        INTERVIEW = 2
+        EXERCISE = 3
+    
+    # the infomation of an article
+    title = models.CharField(max_length=20 , default="") 
     author = models.CharField(max_length=20 , default="匿名")
-    # the published date of an article
-    pub_date = models.DateField()
-    # the type of an article
-    Type = models.IntegerField(default=0)
-    # the content of an article
-    content = MDTextField()   # use markdown
+    pub_date = models.DateField()  
+    Type = models.IntegerField(choices=ArticleType.choices)    # the type of an article
+    content = MDTextField()                                    # using markdown
+    # votes = models.ManyToManyField("authorization.Visitor", on_delete=models.CASCADE)
 
     # show title when showing
     def __str__(self):
@@ -28,11 +25,10 @@ class Article(models.Model):
     
 
 class Comment(models.Model):
-    # the article which the comment is related to
-    target = models.ForeignKey(Article , on_delete=models.CASCADE)
-    # the date of a comment
+    
+    # the information of a comment
+    target = models.ForeignKey(Article , on_delete=models.CASCADE)  # the article which the comment is related to
     pub_date = models.DateField()
-    # the content of a comment
     content = models.TextField(default="")
     
     # show id when showing

@@ -1,0 +1,38 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'articles/code.css' %}">
+</head>
+
+<body>
+    <!-- 文章区域 -->
+    <h1><strong>{{ article.title }}</strong></h1>
+    <p>作者：{{ article.author }}</p>
+    <p>著述时间：{{ article.pub_date }}</p>
+    <hr>
+    <div>{{ article.content | safe }}</div>
+    <!-- 评论区域 -->
+    <hr>
+    {% if comments_list %}
+        <ul>
+        {% for comment in comments_list %}
+            <li>{{ comment.content }} <br> {{ comment.pub_date }} <br></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No comment is available.</p>
+    {% endif %}
+    <!-- 新建评论 -->
+    <form action="{% url 'articles:detail' article.id %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="提交">
+        <input type="text" name="comment_content"> 
+    </form>
+</body>
+
+</html>

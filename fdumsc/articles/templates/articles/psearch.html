@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <h1><strong>搜索界面</strong></h1>
+    <!-- 搜索区域 -->
+    <form action="{% url 'articles:search' %}" method="POST">
+        {% csrf_token %}
+        标题：<input type="text" name="keywords">
+        <input type="submit" value="搜索">
+    </form>
+    <!-- 结果列表 -->
+    {% if articles_list %}
+        <ul>
+        {% for article in articles_list %}
+            <li><a href="{% url 'articles:detail' article.id %}" target="_blank">{{ article.title }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No article matches your input.</p>
+    {% endif %}
+</body>
