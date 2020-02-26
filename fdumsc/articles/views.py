@@ -96,11 +96,15 @@ def DoVote(request, article_id):
             vote.delete()
         except Vote.DoesNotExist:
             Vote.objects.create(article=article, visitor=visitor)
+    else:
+        print("未登录")
     # update the votecnt
     votecnt = Vote.objects.filter(article=article).count()
     article.votecnt = votecnt
     article.save()
     # redirect to the detail view
     # return redirect(reverse('articles:detail', args=[article_id]))
+    # refresh the detail view
+    return HttpResponse(json.dumps("ok"))
 
 

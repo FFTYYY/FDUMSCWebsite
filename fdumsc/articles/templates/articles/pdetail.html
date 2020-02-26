@@ -12,7 +12,7 @@
         function DoVote() {
             var xmlhttp;
             xmlhttp=new XMLHttpRequest();
-            xmlhttp.open("GET", "{% url 'articles:DoVote' article.id %}",false);
+            xmlhttp.open("GET", "{% url 'articles:DoVote' article.id %}", false);
             xmlhttp.send();
             location.reload(location.href);
         }
