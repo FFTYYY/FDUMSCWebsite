@@ -31,7 +31,6 @@ def detail(request, article_id):
     # get the vote status
     visitor = visitor_control.ask_visitor(request)
     if visitor is None:
-        print("未登录")
         IsVoting = False
     else:
         try:
@@ -102,6 +101,6 @@ def DoVote(request, article_id):
     article.votecnt = votecnt
     article.save()
     # redirect to the detail view
-    return redirect(reverse('articles:detail', args=[article_id]))
+    # return redirect(reverse('articles:detail', args=[article_id]))
 
 
