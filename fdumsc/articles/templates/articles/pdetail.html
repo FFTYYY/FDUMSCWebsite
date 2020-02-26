@@ -7,6 +7,17 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="{% static 'articles/code.css' %}">
+    <script>
+        // vote for an article
+        function DoVote() {
+            var xmlhttp;
+            xmlhttp=new XMLHttpRequest();
+            xmlhttp.onreadystatechange=function() {}
+            xmlhttp.open("GET", "{% url 'articles:DoVote' article.id %}", true);
+            xmlhttp.send();
+            location.reload(location.href);
+        }
+    </script>
 </head>
 
 <body>
@@ -16,6 +27,14 @@
     <p>著述时间：{{ article.pub_date }}</p>
     <hr>
     <div>{{ article.content | safe }}</div>
+    <!-- 点赞区域 -->
+    <hr>
+    {% if IsVoting %}
+        <img onclick="DoVote()" src="{% static 'articles/images/green.jpg' %}" width="20" height="20">
+    {% else %}
+        <img onclick="DoVote()" src="{% static 'articles/images/red.jpg' %}" width="20" height="20">
+    {% endif %}
+    <p id="VoteCnt"> 点赞数：{{ article.votecnt }} </p>
     <!-- 评论区域 -->
     <hr>
     {% if comments_list %}
@@ -28,7 +47,7 @@
         <p>No comment is available.</p>
     {% endif %}
     <!-- 新建评论 -->
-    <form action="{% url 'articles:detail' article.id %}" method="POST">
+    <form action="{% url 'articles:commit_comment' article.id %}" method="POST">
         {% csrf_token %}
         <input type="submit" value="提交">
         <input type="text" name="comment_content"> 

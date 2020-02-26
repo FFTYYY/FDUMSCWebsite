@@ -15,9 +15,9 @@ class Article(models.Model):
     title = models.CharField(max_length=20 , default="") 
     author = models.CharField(max_length=20 , default="匿名")
     pub_date = models.DateField()  
-    Type = models.IntegerField(choices=ArticleType.choices)    # the type of an article
-    content = MDTextField()                                    # using markdown
-    # votes = models.ManyToManyField("authorization.Visitor", on_delete=models.CASCADE)
+    Type = models.IntegerField(choices=ArticleType.choices)            # the type of an article
+    content = MDTextField()                                            # using markdown
+    votecnt = models.PositiveIntegerField(default=0, editable=False)   # the cnt of votes
 
     # show title when showing
     def __str__(self):
@@ -31,6 +31,17 @@ class Comment(models.Model):
     pub_date = models.DateField()
     content = models.TextField(default="")
     
+    # show id when showing
+    def __str__(self):
+        return str(self.id)
+    
+    
+class Vote(models.Model):
+
+    # the information of a Vote
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    visitor = models.ForeignKey("authorization.Visitor", on_delete=models.CASCADE)
+
     # show id when showing
     def __str__(self):
         return str(self.id)
