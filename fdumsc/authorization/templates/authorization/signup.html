@@ -1,7 +1,9 @@
 <form action = "signup_submit" method = "post">
 {% csrf_token %}
 
-ID: <input type = "text" name = "name"/>
+ID: <input type = "text" name = "name_id"/>
+昵称: <input type = "text" name = "name"/>
+邮箱: <input type = "text" name = "email"/>
 密码: <input type = "text" name = "password"/>
 
 <input type = "submit" value = "注册"/>

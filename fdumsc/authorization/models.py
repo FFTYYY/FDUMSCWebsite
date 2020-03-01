@@ -4,7 +4,9 @@ from .utils.cookie_control import *
 import django.utils.timezone as timezone
 
 class Visitor(models.Model):
+	name_id = models.CharField(max_length = 200)
 	name = models.CharField(max_length = 200)
+	email = models.CharField(max_length = 200)
 	password = models.CharField(max_length = 200 , blank = True)
 	cookie_value = models.CharField(max_length = 200 , default = "")
 	signup_time = models.DateTimeField(default = timezone.now)

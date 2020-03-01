@@ -20,10 +20,12 @@ def sign_up(request):
 def sign_up_submit(request):
 
 	if request.POST:
+		name_id = request.POST.get('name_id')
 		name = request.POST.get('name')
+		email = request.POST.get('email')
 		password = request.POST.get('password')
 
-		visitor = Visitor(name = name , password = password)
+		visitor = Visitor(name = name , name_id = name_id , email = email , password = password)
 		visitor.save()
 
 
@@ -34,10 +36,10 @@ def sign_in_submit(request):
 	response = http.HttpResponseRedirect("../../")
 
 	if request.POST:
-		name = request.POST.get('name')
+		name_id = request.POST.get('name_id')
 		password = request.POST.get('password')
 
-		visitor = Visitor.objects.filter(name = name , password = password)
+		visitor = Visitor.objects.filter(name_id = name_id , password = password)
 		if len(visitor) <= 0:
 			return HttpResponse("名或密码错误")
 
