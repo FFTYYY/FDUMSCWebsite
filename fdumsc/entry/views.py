@@ -6,7 +6,7 @@ def index(request):
 	now_visitor = ask_visitor(request)
 
 	visitor_name = "游客" if now_visitor is None else now_visitor.name
-
+	# 三对引号的目的是包含多行html代码
 	return HttpResponse("""
 		<p>当前登录用户: %s
 		<p></p>

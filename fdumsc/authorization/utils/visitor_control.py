@@ -30,10 +30,11 @@ def visitor_signin(visitor , response = None):
 	'''将一个visitor的状态设为登录。
 	可以提供一个登录成功的response，如果不提供，则会默认提供一个
 
-	:response: 一个Visitor对象，表述要登录的用户
+	:visitor: 一个Visitor对象，表述要登录的用户
 	:param response: 一个响应
 	:return: response
 	'''
+	
 	if response is None:
 		response = HttpResponse("<p>登录成功！</p>")
 

@@ -22,7 +22,7 @@
 
 				<a href = "{{x.address}}" class = "topic_a">▶ {{x.name}}</a>
 			{% endfor %}
-
+			
 			<script type="text/javascript" charset="utf-8">
 
 				lls = document.getElementsByClassName("topic_a")
@@ -42,6 +42,7 @@
 					}
 				}
 			</script>
+			
 		</div>
 
 	</div>
@@ -51,7 +52,7 @@
 		{% csrf_token %}
 
 		话题名:
-		<textarea class = "text_input" id = "topic_name" name = "name"></textarea>
+		<textarea class = "text_input" name = "name"></textarea>
 
 		<input type = "submit" value = "新建话题" id = "submit_button"/>
 
